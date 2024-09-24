@@ -1,4 +1,4 @@
-import { Alert } from '@/components/alert'
+import Alert from '@/components/alert'
 import { Ban, Check } from "lucide-react";
 
 export default function AlertError({children}) {
