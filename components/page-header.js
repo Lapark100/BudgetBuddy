@@ -14,9 +14,6 @@ export default async function PageHeader({ className }) {
   const supabase = createClient();
   const { data: { user } = {}, error } = await supabase.auth.getUser();
 
-  console.log(user)
-
-  
   if (error) {
     console.error('Error fetching user:', error.message);
   }
@@ -24,15 +21,15 @@ export default async function PageHeader({ className }) {
   return (
     <header className={`flex justify-between items-center ${className}`}>
       <Link href="/dashboard" className="text-xl hover:underline underline underline-offset-8 decoration-2">
-        Finance App
+        Budget Buddy
       </Link>
 
       <div className="flex items-center space-x-1">
         <DarkModeToggle defaultMode={theme} />
         {user ? (
-          <Link href="/dashboard/settings" className= {`${variants['ghost']} ${sizes['sm']} flex items-center space-x-2`} >
+          <Link href="/dashboard/settings" className={`${variants['ghost']} ${sizes['sm']} flex items-center space-x-2`} >
             <Avatar />
-            {user.email}
+            {user.user_metadata.fullName ?? user?.email}
           </Link>
         ) : (
           <Link className={`${variants['ghost']} ${sizes['sm']}`} href="/">

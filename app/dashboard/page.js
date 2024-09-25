@@ -12,15 +12,19 @@ import Range from "./components/range";
 import TransactionListWrapper from "./components/transaction-list-wrapper";
 import { createClient } from "@/lib/supabase/server";
 
-export default async function Page({searchParams}) {
-
-    const range = searchParams?.range ?? 'last30days'
-
-
+export default async function Page({ searchParams }) {
 
     const supabase = createClient()
 
-   
+    const { data: {user} } = await supabase.auth.getUser()
+  
+    const range = searchParams?.range ?? user.user_metadata.defaultView ?? 'last30days'
+
+
+
+    
+
+
 
     return (<div className="space-y-8">
 
@@ -30,24 +34,24 @@ export default async function Page({searchParams}) {
             </h1>
 
             <aside>
-            <Range />
+                <Range defaultView={user.user_metadata.defaultView} />
             </aside>
-            
-           
+
+
         </section>
 
         <section className=" grid grid-cols-2 lg:grid-cols-4 gap-8 ">
 
             {types.map(type => <ErrorBoundary key={type} fallback={<div className="text-red-500">Cannot fetch {type} trend data</div>}>
                 <Suspense fallback={<TrendFallback />}>
-                    <TrendList type={type} range={range}/>
+                    <TrendList type={type} range={range} />
                 </Suspense>
             </ErrorBoundary>
             )}
 
 
 
-          
+
 
 
 

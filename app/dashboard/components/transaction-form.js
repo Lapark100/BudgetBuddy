@@ -44,7 +44,7 @@ export default function TransactionForm({ initialData }) {
             }
             router.push('/dashboard')
         } catch (error) {
-            setLastError(error)
+            setLastError(error?.message)
         } finally {
             setIsSaving(false)
         }
@@ -76,19 +76,19 @@ export default function TransactionForm({ initialData }) {
             <div>
                 <Label className="mb-1">Date</Label>
                 <Input {...register("created_at")} disabled={editing}/>
-                <FormError error={errors.created_at} />
+                <FormError error={errors.created_at?.message} />
             </div>
 
             <div>
                 <Label className="mb-1">Amount</Label>
                 <Input type="number" {...register("amount")} />
-                <FormError error={errors.amount} />
+                <FormError error={errors.amount?.message} />
             </div>
 
             <div className="col-span-2">
                 <Label className="mb-1">Description</Label>
                 <Input type="text"  {...register("description")} />
-                <FormError error={errors.description} />
+                <FormError error={errors.description?.message} />
             </div>
 
           

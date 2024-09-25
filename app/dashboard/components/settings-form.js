@@ -11,24 +11,29 @@ import DateRangeSelect from "@/components/date-range-select";
 
 const initialState = {
     message: '',
-    error: false
+    error: false,
+    errors:{}
 }
 
 export default function SettingsForm({defaults}) {
-    console.log(defaults)
     const [state, formAction] = useFormState(updateSettings, initialState)
 
     return <form className="space-y-4" action={formAction}>
         {state?.error && <AlertError>{state.message}</AlertError>}
-        {!state?.error && state?.message.length > 0 && <AlertSuccess>{state.message}</AlertSuccess>}
+        {!state?.error && state?.message?.length > 0 && <AlertSuccess>{state.message}</AlertSuccess>}
 
         <Label htmlFor="fullName"> User full name</Label>
         <Input type="text" name="fullName" placeholder="User full name" defaultValue={defaults?.fullName}/>
+        {state?.errors['fullName']?.map(error => <FormError key={`fullName-${error}`} error={error} />)}
 
-        <Label>Default transactions view</Label>
-        <DateRangeSelect htmlFor="defaultView" name="defaultView" id="defaultView" defaultValue={defaults?.defaultValue} />
+        <Label  htmlFor="defaultView" >Default transactions view</Label>
+        <DateRangeSelect name="defaultView" id="defaultView" defaultValue={defaults?.defaultView} />
+        {state?.errors['defaultView']?.map(error => <FormError key={`defaultView-${error}`} error={error} />)}
         <SubmitButton>
             Update Settings
         </SubmitButton>
     </form>
+    
 }
+
+
