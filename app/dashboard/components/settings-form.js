@@ -8,6 +8,7 @@ import AlertError from "@/components/alert-error";
 import AlertSuccess from "@/components/alert-success";
 import { updateSettings } from "@/lib/actions";
 import DateRangeSelect from "@/components/date-range-select";
+import FormError from "@/components/form-error";
 
 const initialState = {
     message: '',
